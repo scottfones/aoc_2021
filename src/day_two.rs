@@ -1,7 +1,7 @@
 //! Advent of Code 2021
 //! Day Two - Dive!
+#![allow(dead_code)]
 
-//#[path = "read_input.rs"] mod read_input;
 use crate::read_input;
 
 pub(crate) fn day_two_main() {
