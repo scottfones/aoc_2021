@@ -1,5 +1,6 @@
 //! Advent of Code 2021
 //! Day One - Sonar Sweep
+#![allow(dead_code)]
 
 use std::fs::File;
 use std::io::{self, BufRead};
