@@ -5,7 +5,7 @@
 use crate::read_input;
 
 pub(crate) fn day_two_main() {
-    let input = read_input::read_file("day_two_input.txt".to_string());
+    let input = read_input::read_file("day_two_input.txt");
 
     calc_dist_depth(&input);
     calc_aim(&input);
