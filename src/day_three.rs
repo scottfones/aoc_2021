@@ -1,5 +1,6 @@
 //! Advent of Code 2021
 //! Day Three - Binary Diagnostic
+#![allow(dead_code)]
 
 use std::fmt::Debug;
 
