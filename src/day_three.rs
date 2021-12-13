@@ -47,7 +47,7 @@ fn calc_gamma_eps(values: &[String]) -> u32 {
 }
 
 #[test]
-fn test_calc_gamma_eps() {
+fn test_daythree_calc_gamma_eps() {
     let input_a = read_input::read_file("day_three_test_input.txt");
     assert_eq!(calc_gamma_eps(&input_a), 198);
 
@@ -66,7 +66,7 @@ fn bin_string_to_dec(s_input: String) -> u32 {
 }
 
 #[test]
-fn test_bin_string_to_dec() {
+fn test_daythree_bin_string_to_dec() {
     assert_eq!(bin_string_to_dec("10111".to_string()), 23);
     assert_eq!(bin_string_to_dec("01010".to_string()), 10);
 }
@@ -82,7 +82,7 @@ fn bin_vec_to_dec(bin_vec: &[u32]) -> u32 {
 }
 
 #[test]
-fn test_bin_vec_to_dec() {
+fn test_daythree_bin_vec_to_dec() {
     assert_eq!(bin_vec_to_dec(&[1, 0, 1, 1, 1]), 23);
     assert_eq!(bin_vec_to_dec(&[0, 1, 0, 1, 0]), 10);
 }
@@ -226,7 +226,7 @@ fn find_min(tree: &LifeTree) -> String {
 }
 
 #[test]
-fn test_find_max() {
+fn test_daythree_find_max() {
     let mut life_tree = LifeTree::NonEmpty(Box::new(BitNode::new_root()));
 
     let values = read_input::read_file("day_three_test_input.txt");
@@ -238,7 +238,7 @@ fn test_find_max() {
 }
 
 #[test]
-fn test_find_min() {
+fn test_daythree_find_min() {
     let mut life_tree = LifeTree::NonEmpty(Box::new(BitNode::new_root()));
 
     let values = read_input::read_file("day_three_test_input.txt");
