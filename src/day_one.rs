@@ -7,7 +7,7 @@ use std::io::{self, BufRead};
 use std::path::Path;
 
 pub(crate) fn day_one_main() {
-    println!("\nDay Three Answers");
+    println!("\nDay One Answers");
     let mut input = Vec::new();
     if let Ok(lines) = read_lines("./input/day_one_input.txt") {
         for line in lines {
