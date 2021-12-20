@@ -1,5 +1,6 @@
 //! Advent of Code 2021
 //! Day Six - Lanternfish
+#![allow(dead_code)]
 
 use std::{fs, collections::HashMap};
 
