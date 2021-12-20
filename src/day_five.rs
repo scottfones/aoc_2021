@@ -1,5 +1,7 @@
 //! Advent of Code 2021
 //! Day Five - Hydrothermal Venture
+#![allow(dead_code)]
+
 
 use crate::read_input;
 use std::{collections::HashMap, str::FromStr};
