@@ -139,11 +139,9 @@ fn part_one(input: &[String]) -> u32 {
         }
     }
 
-    vent_map.retain(|_,  &mut v| v > 1);
-
     let mut cover_count = 0u32;
-    for vals in vent_map.values() {
-        if vals > &1u16 {
+    for val in vent_map.values() {
+        if val > &1u16 {
             cover_count += 1;
         }
     }
@@ -162,8 +160,8 @@ fn part_two(input: &[String]) -> u32 {
     }
 
     let mut cover_count = 0u32;
-    for vals in vent_map.values() {
-        if vals > &1u16 {
+    for val in vent_map.values() {
+        if val > &1u16 {
             cover_count += 1;
         }
     }
@@ -217,9 +215,9 @@ fn test_dayfive_pointpair_parse_diag_less_less() {
     let mut vent_map = HashMap::<(u32, u32), u16>::new();
     pp.parse_diag(&mut vent_map);
 
-    assert!(vent_map.contains_key(&(3_u32,1_u32)));
-    assert!(vent_map.contains_key(&(4_u32,2_u32)));
-    assert!(vent_map.contains_key(&(5_u32,3_u32)));
+    assert!(vent_map.contains_key(&(3_u32, 1_u32)));
+    assert!(vent_map.contains_key(&(4_u32, 2_u32)));
+    assert!(vent_map.contains_key(&(5_u32, 3_u32)));
     assert_eq!(vent_map.len(), 3);
 }
 
@@ -229,15 +227,15 @@ fn test_dayfive_pointpair_parse_diag_less_equal() {
     let mut vent_map = HashMap::<(u32, u32), u16>::new();
     pp.parse_diag(&mut vent_map);
 
-    assert!(vent_map.contains_key(&(1_u32,5_u32)));
-    assert!(vent_map.contains_key(&(2_u32,5_u32)));
-    assert!(vent_map.contains_key(&(3_u32,5_u32)));
-    assert!(vent_map.contains_key(&(4_u32,5_u32)));
-    assert!(vent_map.contains_key(&(5_u32,5_u32)));
-    assert!(vent_map.contains_key(&(6_u32,5_u32)));
-    assert!(vent_map.contains_key(&(7_u32,5_u32)));
-    assert!(vent_map.contains_key(&(8_u32,5_u32)));
-    assert!(vent_map.contains_key(&(9_u32,5_u32)));
+    assert!(vent_map.contains_key(&(1_u32, 5_u32)));
+    assert!(vent_map.contains_key(&(2_u32, 5_u32)));
+    assert!(vent_map.contains_key(&(3_u32, 5_u32)));
+    assert!(vent_map.contains_key(&(4_u32, 5_u32)));
+    assert!(vent_map.contains_key(&(5_u32, 5_u32)));
+    assert!(vent_map.contains_key(&(6_u32, 5_u32)));
+    assert!(vent_map.contains_key(&(7_u32, 5_u32)));
+    assert!(vent_map.contains_key(&(8_u32, 5_u32)));
+    assert!(vent_map.contains_key(&(9_u32, 5_u32)));
     assert_eq!(vent_map.len(), 9);
 }
 
@@ -247,10 +245,10 @@ fn test_dayfive_pointpair_parse_diag_less_greater() {
     let mut vent_map = HashMap::<(u32, u32), u16>::new();
     pp.parse_diag(&mut vent_map);
 
-    assert!(vent_map.contains_key(&(3_u32,7_u32)));
-    assert!(vent_map.contains_key(&(4_u32,6_u32)));
-    assert!(vent_map.contains_key(&(5_u32,5_u32)));
-    assert!(vent_map.contains_key(&(6_u32,4_u32)));
+    assert!(vent_map.contains_key(&(3_u32, 7_u32)));
+    assert!(vent_map.contains_key(&(4_u32, 6_u32)));
+    assert!(vent_map.contains_key(&(5_u32, 5_u32)));
+    assert!(vent_map.contains_key(&(6_u32, 4_u32)));
     assert_eq!(vent_map.len(), 4);
 }
 
@@ -261,11 +259,11 @@ fn test_dayfive_pointpair_parse_diag_equal_less() {
     pp.parse_diag(&mut vent_map);
     println!("{:?}", vent_map);
 
-    assert!(vent_map.contains_key(&(9_u32,4_u32)));
-    assert!(vent_map.contains_key(&(9_u32,5_u32)));
-    assert!(vent_map.contains_key(&(9_u32,6_u32)));
-    assert!(vent_map.contains_key(&(9_u32,7_u32)));
-    assert!(vent_map.contains_key(&(9_u32,8_u32)));
+    assert!(vent_map.contains_key(&(9_u32, 4_u32)));
+    assert!(vent_map.contains_key(&(9_u32, 5_u32)));
+    assert!(vent_map.contains_key(&(9_u32, 6_u32)));
+    assert!(vent_map.contains_key(&(9_u32, 7_u32)));
+    assert!(vent_map.contains_key(&(9_u32, 8_u32)));
     assert_eq!(vent_map.len(), 5);
 }
 
@@ -275,7 +273,7 @@ fn test_dayfive_pointpair_parse_diag_equal_equal() {
     let mut vent_map = HashMap::<(u32, u32), u16>::new();
     pp.parse_diag(&mut vent_map);
 
-    assert!(vent_map.contains_key(&(2_u32,2_u32)));
+    assert!(vent_map.contains_key(&(2_u32, 2_u32)));
     assert_eq!(vent_map.len(), 1);
 }
 
@@ -285,11 +283,11 @@ fn test_dayfive_pointpair_parse_diag_equal_greater() {
     let mut vent_map = HashMap::<(u32, u32), u16>::new();
     pp.parse_diag(&mut vent_map);
 
-    assert!(vent_map.contains_key(&(6_u32,3_u32)));
-    assert!(vent_map.contains_key(&(6_u32,4_u32)));
-    assert!(vent_map.contains_key(&(6_u32,5_u32)));
-    assert!(vent_map.contains_key(&(6_u32,6_u32)));
-    assert!(vent_map.contains_key(&(6_u32,7_u32)));
+    assert!(vent_map.contains_key(&(6_u32, 3_u32)));
+    assert!(vent_map.contains_key(&(6_u32, 4_u32)));
+    assert!(vent_map.contains_key(&(6_u32, 5_u32)));
+    assert!(vent_map.contains_key(&(6_u32, 6_u32)));
+    assert!(vent_map.contains_key(&(6_u32, 7_u32)));
     assert_eq!(vent_map.len(), 5);
 }
 
@@ -299,11 +297,11 @@ fn test_dayfive_pointpair_parse_diag_greater_less() {
     let mut vent_map = HashMap::<(u32, u32), u16>::new();
     pp.parse_diag(&mut vent_map);
 
-    assert!(vent_map.contains_key(&(9_u32,1_u32)));
-    assert!(vent_map.contains_key(&(8_u32,2_u32)));
-    assert!(vent_map.contains_key(&(7_u32,3_u32)));
-    assert!(vent_map.contains_key(&(6_u32,4_u32)));
-    assert!(vent_map.contains_key(&(5_u32,5_u32)));
+    assert!(vent_map.contains_key(&(9_u32, 1_u32)));
+    assert!(vent_map.contains_key(&(8_u32, 2_u32)));
+    assert!(vent_map.contains_key(&(7_u32, 3_u32)));
+    assert!(vent_map.contains_key(&(6_u32, 4_u32)));
+    assert!(vent_map.contains_key(&(5_u32, 5_u32)));
     assert_eq!(vent_map.len(), 5);
 }
 
@@ -313,8 +311,8 @@ fn test_dayfive_pointpair_parse_diag_greater_equal() {
     let mut vent_map = HashMap::<(u32, u32), u16>::new();
     pp.parse_diag(&mut vent_map);
 
-    assert!(vent_map.contains_key(&(3_u32,2_u32)));
-    assert!(vent_map.contains_key(&(4_u32,2_u32)));
+    assert!(vent_map.contains_key(&(3_u32, 2_u32)));
+    assert!(vent_map.contains_key(&(4_u32, 2_u32)));
     assert_eq!(vent_map.len(), 2);
 }
 
@@ -324,9 +322,9 @@ fn test_dayfive_pointpair_parse_diag_greater_greater() {
     let mut vent_map = HashMap::<(u32, u32), u16>::new();
     pp.parse_diag(&mut vent_map);
 
-    assert!(vent_map.contains_key(&(2_u32,3_u32)));
-    assert!(vent_map.contains_key(&(3_u32,4_u32)));
-    assert!(vent_map.contains_key(&(4_u32,5_u32)));
+    assert!(vent_map.contains_key(&(2_u32, 3_u32)));
+    assert!(vent_map.contains_key(&(3_u32, 4_u32)));
+    assert!(vent_map.contains_key(&(4_u32, 5_u32)));
     assert_eq!(vent_map.len(), 3);
 }
 
@@ -334,7 +332,6 @@ fn test_dayfive_pointpair_parse_diag_greater_greater() {
 fn test_dayfive_part_one() {
     let input = read_input::read_file("day_five_test_input.txt");
     assert_eq!(part_one(&input), 5);
-
 
     let input = read_input::read_file("day_five_input.txt");
     assert_eq!(part_one(&input), 6113);
