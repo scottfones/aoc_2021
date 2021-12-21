@@ -4,6 +4,7 @@ mod day_three;
 mod day_four;
 mod day_five;
 mod day_six;
+mod day_seven;
 
 pub mod read_input;
 
@@ -13,5 +14,6 @@ fn main() {
     // day_three::day_three_main();
     // day_four::day_four_main();
     // day_five::day_five_main();
-    day_six::day_six_main();
+    // day_six::day_six_main();
+    day_seven::day_six_main();
 }
