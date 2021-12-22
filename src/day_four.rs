@@ -2,9 +2,97 @@
 //! Day Four - Giant Squid
 #![allow(dead_code)]
 
+use crate::read_input;
 use std::fmt::Debug;
 
-use crate::read_input;
+pub(crate) fn day_four_main() {
+    println!("\nDay Four Answers");
+    let mut input = read_input::read_file("day_four_input.txt");
+
+    let boards = get_boards(&mut input);
+    let rand_vals = get_randoms(&input);
+
+    play_to_win(boards.clone(), &rand_vals);
+    play_to_lose(boards, &rand_vals);
+}
+
+/// Parse and return the bingo boards associated with the dataset.
+fn get_boards(input: &mut Vec<String>) -> Vec<BingoBoard> {
+    let boards_raw = input.split_off(2);
+
+    let mut boards: Vec<BingoBoard> = Vec::new();
+    let mut board_builder: Vec<u8> = Vec::new();
+    for row in boards_raw {
+        let row_vals: Vec<&str> = row.split(' ').collect();
+
+        if !row.is_empty() {
+            for val in row_vals {
+                if val.eq("") {
+                    continue;
+                }
+                board_builder.push(val.parse::<u8>().unwrap())
+            }
+        } else {
+            boards.push(BingoBoard::new(board_builder.clone()));
+            board_builder.clear();
+        }
+    }
+    boards.push(BingoBoard::new(board_builder));
+    boards
+}
+
+/// Parse and return the random numbers associated with the dataset.
+fn get_randoms(input: &[String]) -> Vec<u8> {
+    let rand_str: Vec<&str> = input[0].split(',').collect();
+    let rand_vals: Vec<u8> = rand_str.iter().map(|x| x.parse::<u8>().unwrap()).collect();
+    rand_vals
+}
+
+/// Part One
+///
+/// Plays bingo on all supplied `boards` given the random numbers, `nums`,
+/// until a winner is found.
+fn play_to_win(mut boards: Vec<BingoBoard>, nums: &[u8]) -> Option<u32> {
+    for num in nums.iter() {
+        for board in boards.iter_mut() {
+            if board.mark_board(*num) && board.check_board() {
+                println!("!!!BINGO!!!");
+                println!("Last drawn: {}", num);
+                return Some(board.score_board(*num));
+            }
+        }
+    }
+    None
+}
+
+/// Part Two
+///
+/// Plays bingo on all supplied `boards` given the random numbers, `nums`,
+/// until a only one board remains.
+fn play_to_lose(mut boards: Vec<BingoBoard>, nums: &[u8]) -> Option<u32> {
+    let board_count = boards.len() as i8;
+    let mut win_count = 0_i8;
+
+    for num in nums.iter() {
+        for board in boards.iter_mut() {
+            if board.is_winner {
+                continue;
+            }
+
+            if board.mark_board(*num) && board.check_board() {
+                win_count += 1;
+                board.is_winner = true;
+            }
+
+            if win_count == board_count {
+                println!("!!!LOSER!!!");
+                println!("Last drawn: {}", num);
+                return Some(board.score_board(*num));
+            }
+        }
+    }
+    None
+}
 
 #[derive(Clone, Copy, Debug, PartialEq)]
 enum BoardValue {
@@ -46,12 +134,14 @@ impl BingoBoard {
             values,
         }
     }
+    
     fn check_board(&self) -> bool {
         let col_bingo = self.check_cols();
         let row_bingo = self.check_rows();
 
         col_bingo || row_bingo
     }
+
     fn check_cols(&self) -> bool {
         let mut col_vals: Vec<bool> = Vec::new();
         for i in 0..5 {
@@ -68,6 +158,7 @@ impl BingoBoard {
         }
         false
     }
+
     fn check_rows(&self) -> bool {
         let bingo_r0 = self.r0.iter().all(|&x| x.is_marked());
         let bingo_r1 = self.r1.iter().all(|&x| x.is_marked());
@@ -77,6 +168,7 @@ impl BingoBoard {
 
         bingo_r0 || bingo_r1 || bingo_r2 || bingo_r3 || bingo_r4
     }
+
     fn mark_board(&mut self, target: u8) -> bool {
         if self.values.contains(&target) {
             let val_index = self.values.iter().position(|&x| x == target).unwrap();
@@ -97,6 +189,7 @@ impl BingoBoard {
             false
         }
     }
+
     fn row_sum(&self, row: &[BoardValue]) -> u32 {
         let mut sum = 0_u32;
         for r_val in row {
@@ -107,6 +200,7 @@ impl BingoBoard {
         }
         sum
     }
+
     fn score_board(&self, multi: u8) -> u32 {
         let mut board_sum = 0_u32;
         board_sum += self.row_sum(&self.r0);
@@ -123,6 +217,7 @@ impl BingoBoard {
 }
 
 impl PartialEq for BingoBoard {
+    /// Two boards are equal if their rows are equal
     fn eq(&self, other: &Self) -> bool {
         self.r0 == other.r0
             && self.r1 == other.r1
@@ -130,41 +225,6 @@ impl PartialEq for BingoBoard {
             && self.r3 == other.r3
             && self.r4 == other.r4
     }
-}
-
-pub(crate) fn day_four_main() {
-    println!("\nDay Four Answers");
-    let mut input = read_input::read_file("day_four_input.txt");
-
-    let boards = get_boards(&mut input);
-    let rand_vals = get_randoms(&input);
-
-    play_to_win(boards.clone(), &rand_vals);
-    play_to_lose(boards, &rand_vals);
-}
-
-fn get_boards(input: &mut Vec<String>) -> Vec<BingoBoard> {
-    let boards_raw = input.split_off(2);
-
-    let mut boards: Vec<BingoBoard> = Vec::new();
-    let mut board_builder: Vec<u8> = Vec::new();
-    for row in boards_raw {
-        let row_vals: Vec<&str> = row.split(' ').collect();
-
-        if !row.is_empty() {
-            for val in row_vals {
-                if val.eq("") {
-                    continue;
-                }
-                board_builder.push(val.parse::<u8>().unwrap())
-            }
-        } else {
-            boards.push(BingoBoard::new(board_builder.clone()));
-            board_builder.clear();
-        }
-    }
-    boards.push(BingoBoard::new(board_builder));
-    boards
 }
 
 #[test]
@@ -307,12 +367,6 @@ fn test_dayfour_get_boards() {
     assert_eq!(boards[2], b3);
 }
 
-fn get_randoms(input: &[String]) -> Vec<u8> {
-    let rand_str: Vec<&str> = input[0].split(',').collect();
-    let rand_vals: Vec<u8> = rand_str.iter().map(|x| x.parse::<u8>().unwrap()).collect();
-    rand_vals
-}
-
 #[test]
 fn test_dayfour_get_randoms() {
     let input = read_input::read_file("day_four_test_input.txt");
@@ -322,19 +376,6 @@ fn test_dayfour_get_randoms() {
         26, 1,
     ];
     assert_eq!(rand_vals, exp_vals);
-}
-
-fn play_to_win(mut boards: Vec<BingoBoard>, nums: &[u8]) -> Option<u32> {
-    for num in nums.iter() {
-        for board in boards.iter_mut() {
-            if board.mark_board(*num) && board.check_board() {
-                println!("!!!BINGO!!!");
-                println!("Last drawn: {}", num);
-                return Some(board.score_board(*num));
-            }
-        }
-    }
-    None
 }
 
 #[test]
@@ -348,31 +389,6 @@ fn test_dayfour_play_to_win() {
     let boards = get_boards(&mut input);
     let rand_vals = get_randoms(&input);
     assert_eq!(play_to_win(boards, &rand_vals), Some(60368));
-}
-
-fn play_to_lose(mut boards: Vec<BingoBoard>, nums: &[u8]) -> Option<u32> {
-    let board_count = boards.len() as i8;
-    let mut win_count = 0_i8;
-
-    for num in nums.iter() {
-        for board in boards.iter_mut() {
-            if board.is_winner {
-                continue;
-            }
-
-            if board.mark_board(*num) && board.check_board() {
-                win_count += 1;
-                board.is_winner = true;
-            }
-
-            if win_count == board_count {
-                println!("!!!LOSER!!!");
-                println!("Last drawn: {}", num);
-                return Some(board.score_board(*num));
-            }
-        }
-    }
-    None
 }
 
 #[test]
