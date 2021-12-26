@@ -5,7 +5,7 @@
 use std::collections::HashSet;
 
 use crate::read_input;
-use ndarray::{s, Array, Array2, ArrayBase, Dim, OwnedRepr};
+use ndarray::{s, Array, Array2};
 
 pub(crate) fn day_nine_main() {
     println!("\nDay Nine Answers");
@@ -91,7 +91,7 @@ impl MapLocation {
 
 #[derive(Debug)]
 struct Basin {
-    height_map: ArrayBase<OwnedRepr<u8>, Dim<[usize; 2]>>,
+    height_map: Array2<u8>,
     low_points: Vec<MapLocation>,
 }
 
