@@ -1,5 +1,6 @@
 //! Advent of Code 2021
 //! Day Eleven - Dumbo Octopus
+#![allow(dead_code)]
 
 use crate::read_input;
 use ndarray::prelude::*;
