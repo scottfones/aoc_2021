@@ -87,9 +87,9 @@ impl OctoMap {
                 match (y == 0, y == m, x == 0, x == n) {
                     (true, false, true, false) => {
                         // Top Row, Left Column
-                        let mut view = self.energy_map.slice_mut(s![..=1, ..=1]);
-                        let delta = arr2(&[[0, 1], [1, 1]]);
-                        view += &delta;
+                        self.energy_map[[y, x + 1]] += 1;
+                        self.energy_map[[y + 1, x]] += 1;
+                        self.energy_map[[y + 1, x + 1]] += 1;
                     }
                     (true, false, false, false) => {
                         // Top Row, Intermediate Columns
