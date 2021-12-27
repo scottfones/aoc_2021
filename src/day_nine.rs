@@ -224,7 +224,7 @@ fn test_daynine_part_one_actual() {
 }
 
 #[test]
-fn test_daynine_part_two_examplel() {
+fn test_daynine_part_two_example() {
     let input = read_input::read_file("day_nine_test_input.txt");
     let b = Basin::new(input);
 

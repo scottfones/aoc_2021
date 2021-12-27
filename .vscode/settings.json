@@ -7,12 +7,17 @@
     "daynine",
     "dayseven",
     "daysix",
+    "dayten",
+    "daythree",
+    "daytwelve",
     "fishies",
     "horiz",
     "octomap",
+    "Pathing",
     "pointpair",
     "segs",
     "sevensegment",
-    "sevseg"
+    "sevseg",
+    "testinput"
   ]
 }
