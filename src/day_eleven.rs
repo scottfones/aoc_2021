@@ -10,7 +10,6 @@ pub(crate) fn day_eleven_main() {
 
     let input = read_input::read_file("day_eleven_input.txt");
     let octomap = OctoMap::new(input);
-    println!("{:#?}", octomap);
 
     part_one(octomap.clone());
     part_two(octomap);
