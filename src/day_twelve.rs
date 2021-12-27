@@ -1,5 +1,6 @@
 //! Advent of Code 2021
 //! Day Twelve - Passage Pathing
+#![allow(dead_code)]
 
 use crate::read_input;
 use std::collections::HashMap;
