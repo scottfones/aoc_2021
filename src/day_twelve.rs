@@ -108,7 +108,7 @@ impl CaveNode {
         new_id: String,
         path_dict: &HashMap<&str, Vec<&str>>,
     ) -> bool {
-        let mut is_term_path = true;
+        let mut is_term_path = false;
         let mut new_node = CaveNode::new(new_id.clone());
 
         match (&self.cave_type, &new_node.cave_type) {
