@@ -31,8 +31,8 @@ fn part_two(path_dict: &HashMap<&str, Vec<&str>>) {
         path_tree.add2(vec!["start".to_string()], val.to_string(), path_dict);
     }
 
-    let paths = collect_paths(&path_tree, "".to_string()).unwrap();
-    println!("Part Two, Path Count: {}", paths.len());
+   let path_count = count_paths(&path_tree);
+   println!("Part Two, Path Count: {}", path_count);
 }
 
 #[derive(Debug)]
@@ -107,13 +107,17 @@ impl CaveNode {
         mut chain: Vec<String>,
         new_id: String,
         path_dict: &HashMap<&str, Vec<&str>>,
-    ) {
+    ) -> bool {
+        let mut is_term_path = true;
         let mut new_node = CaveNode::new(new_id.clone());
 
         match (&self.cave_type, &new_node.cave_type) {
             (_, &CaveType::Small) if chain.contains(&new_id) => {
                 let mut is_doubled = false;
-                for lower in chain.iter().filter(|s| s.chars().next().unwrap().is_lowercase()) {
+                for lower in chain
+                    .iter()
+                    .filter(|s| s.chars().next().unwrap().is_lowercase())
+                {
                     if chain.iter().filter(|s| s.eq(&lower)).count() > 1 {
                         is_doubled = true;
                         break;
@@ -124,22 +128,33 @@ impl CaveNode {
                     chain.push(new_id.clone());
                     if let Some(values) = path_dict.get(&new_id.as_str()) {
                         for val in values {
-                            new_node.add2(chain.clone(), val.to_string(), path_dict)
+                            is_term_path |= new_node.add2(chain.clone(), val.to_string(), path_dict);
                         }
                     }
 
-                    self.paths.push(new_node);
+                    if is_term_path {
+                        self.paths.push(new_node);
+                    }
                 }
+
+                is_term_path
+            }
+            (_, &CaveType::End) => {
+                self.paths.push(new_node);
+                true
             }
             _ => {
                 chain.push(new_id.clone());
                 if let Some(values) = path_dict.get(&new_id.as_str()) {
                     for val in values {
-                        new_node.add2(chain.clone(), val.to_string(), path_dict)
+                        is_term_path |=  new_node.add2(chain.clone(), val.to_string(), path_dict);
                     }
                 }
 
-                self.paths.push(new_node);
+                if is_term_path {
+                    self.paths.push(new_node);
+                }
+                is_term_path
             }
         }
     }
@@ -150,8 +165,7 @@ fn build_path_dict(lines: &[String]) -> HashMap<&str, Vec<&str>> {
 
     for line in lines {
         let parts: Vec<&str> = line.split('-').collect();
-        match (parts[0], parts[1])
-        {
+        match (parts[0], parts[1]) {
             (a, b) if a.eq("start") || b.eq("end") => {
                 let path = path_dict.entry(a).or_insert_with(|| vec![b]);
                 if !path.contains(&b) {
@@ -165,9 +179,7 @@ fn build_path_dict(lines: &[String]) -> HashMap<&str, Vec<&str>> {
                 }
             }
             (a, b) => {
-                let path = path_dict
-                    .entry(a)
-                    .or_insert_with(|| vec![b]);
+                let path = path_dict.entry(a).or_insert_with(|| vec![b]);
                 if !path.contains(&b) {
                     path.push(b);
                 }
@@ -212,25 +224,32 @@ fn collect_paths(cave_node: &CaveNode, mut path: String) -> Option<Vec<String>> 
     }
 }
 
+fn count_paths(cave_node: &CaveNode) -> u32 {
+    let mut path_count = 0_u32;
+
+    match cave_node.cave_type {
+        CaveType::End => {
+            1
+        }
+        _ => {
+            for node in &cave_node.paths {
+                path_count += count_paths(node)
+            }
+            path_count
+        }
+    }
+}
+
 #[test]
 fn test_daytwelve_build_path_dict_sample_small() {
     let input = read_input::read_file("day_twelve_test_input_small.txt");
     let pd = build_path_dict(&input);
 
-    assert_eq!(
-        pd.get("start"),
-        Some(&vec!["A", "b"])
-    );
+    assert_eq!(pd.get("start"), Some(&vec!["A", "b"]));
     assert_eq!(pd.get("d"), Some(&vec!["b"]));
-    assert_eq!(
-        pd.get("b"),
-        Some(&vec!["A", "d", "end"])
-    );
+    assert_eq!(pd.get("b"), Some(&vec!["A", "d", "end"]));
     assert_eq!(pd.get("c"), Some(&vec!["A"]));
-    assert_eq!(
-        pd.get("A"),
-        Some(&vec!["c", "b", "end"])
-    );
+    assert_eq!(pd.get("A"), Some(&vec!["c", "b", "end"]));
     assert_eq!(pd.len(), 5);
 }
 
