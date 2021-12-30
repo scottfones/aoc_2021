@@ -21,8 +21,8 @@ fn part_one(path_dict: &HashMap<&str, Vec<&str>>) {
         path_tree.add(vec!["start".to_string()], val.to_string(), path_dict);
     }
 
-    let paths = collect_paths(&path_tree, "".to_string()).unwrap();
-    println!("Part One, Path Count: {}", paths.len());
+    let path_count = count_paths(&path_tree);
+    println!("Part One, Path Count: {}",path_count);
 }
 
 fn part_two(path_dict: &HashMap<&str, Vec<&str>>) {
@@ -83,20 +83,30 @@ impl CaveNode {
         mut chain: Vec<String>,
         new_id: String,
         path_dict: &HashMap<&str, Vec<&str>>,
-    ) {
+    ) -> bool {
+        let mut is_term_path = false;
         let mut new_node = CaveNode::new(new_id.clone());
 
         match (&self.cave_type, &new_node.cave_type) {
-            (_, &CaveType::Small) if chain.contains(&new_id) => {}
+            (_, &CaveType::Small) if chain.contains(&new_id) => {
+                false
+            }
+            (_, &CaveType::End) => {
+                self.paths.push(new_node);
+                true
+            }
             _ => {
                 chain.push(new_id.clone());
                 if let Some(values) = path_dict.get(&new_id.as_str()) {
                     for val in values {
-                        new_node.add(chain.clone(), val.to_string(), path_dict)
+                        is_term_path |=  new_node.add(chain.clone(), val.to_string(), path_dict);
                     }
                 }
 
-                self.paths.push(new_node);
+                if is_term_path {
+                    self.paths.push(new_node);
+                }
+                is_term_path
             }
         }
     }
@@ -194,36 +204,6 @@ fn build_path_dict(lines: &[String]) -> HashMap<&str, Vec<&str>> {
     path_dict
 }
 
-fn collect_paths(cave_node: &CaveNode, mut path: String) -> Option<Vec<String>> {
-    let mut paths: Vec<String> = Vec::new();
-
-    match cave_node.cave_type {
-        CaveType::End => {
-            path.push_str(",end");
-            Some(vec![path])
-        }
-        CaveType::Start => {
-            path.push_str("start");
-            for node in &cave_node.paths {
-                if let Some(p) = collect_paths(node, path.clone()) {
-                    paths.extend(p);
-                }
-            }
-            Some(paths)
-        }
-        CaveType::Small | CaveType::Large if !cave_node.paths.is_empty() => {
-            path.push_str(&format!(",{}", cave_node.id));
-            for node in &cave_node.paths {
-                if let Some(p) = collect_paths(node, path.clone()) {
-                    paths.extend(p);
-                }
-            }
-            Some(paths)
-        }
-        _ => None,
-    }
-}
-
 fn count_paths(cave_node: &CaveNode) -> u32 {
     let mut path_count = 0_u32;
 
@@ -263,8 +243,8 @@ fn test_daytwelve_part_one_sample_small() {
         path_tree.add(vec!["start".to_string()], val.to_string(), &path_dict);
     }
 
-    let paths = collect_paths(&path_tree, "".to_string()).unwrap();
-    assert_eq!(paths.len(), 10)
+    let paths = count_paths(&path_tree);
+    assert_eq!(paths, 10)
 }
 
 #[test]
@@ -277,8 +257,8 @@ fn test_daytwelve_part_one_sample_medium() {
         path_tree.add(vec!["start".to_string()], val.to_string(), &path_dict);
     }
 
-    let paths = collect_paths(&path_tree, "".to_string()).unwrap();
-    assert_eq!(paths.len(), 19)
+    let paths = count_paths(&path_tree,);
+    assert_eq!(paths, 19)
 }
 
 #[test]
@@ -291,8 +271,8 @@ fn test_daytwelve_part_one_sample_large() {
         path_tree.add(vec!["start".to_string()], val.to_string(), &path_dict);
     }
 
-    let paths = collect_paths(&path_tree, "".to_string()).unwrap();
-    assert_eq!(paths.len(), 226)
+    let paths = count_paths(&path_tree);
+    assert_eq!(paths, 226)
 }
 
 #[test]
@@ -305,8 +285,8 @@ fn test_daytwelve_part_one_actual() {
         path_tree.add(vec!["start".to_string()], val.to_string(), &path_dict);
     }
 
-    let paths = collect_paths(&path_tree, "".to_string()).unwrap();
-    assert_eq!(paths.len(), 4707)
+    let paths = count_paths(&path_tree);
+    assert_eq!(paths, 4707)
 }
 
 #[test]
@@ -319,8 +299,8 @@ fn test_daytwelve_part_two_sample_small() {
         path_tree.add2(vec!["start".to_string()], val.to_string(), &path_dict);
     }
 
-    let paths = collect_paths(&path_tree, "".to_string()).unwrap();
-    assert_eq!(paths.len(), 36)
+    let paths = count_paths(&path_tree);
+    assert_eq!(paths, 36)
 }
 
 #[test]
@@ -333,8 +313,8 @@ fn test_daytwelve_part_two_sample_medium() {
         path_tree.add2(vec!["start".to_string()], val.to_string(), &path_dict);
     }
 
-    let paths = collect_paths(&path_tree, "".to_string()).unwrap();
-    assert_eq!(paths.len(), 103)
+    let paths = count_paths(&path_tree);
+    assert_eq!(paths, 103)
 }
 
 #[test]
@@ -347,6 +327,6 @@ fn test_daytwelve_part_two_sample_large() {
         path_tree.add2(vec!["start".to_string()], val.to_string(), &path_dict);
     }
 
-    let paths = collect_paths(&path_tree, "".to_string()).unwrap();
-    assert_eq!(paths.len(), 3509)
+    let paths = count_paths(&path_tree);
+    assert_eq!(paths, 3509)
 }
