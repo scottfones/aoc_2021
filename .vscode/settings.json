@@ -8,16 +8,22 @@
     "dayseven",
     "daysix",
     "dayten",
+    "daythirteen",
     "daythree",
     "daytwelve",
     "fishies",
+    "folddirection",
     "horiz",
+    "instrs",
     "octomap",
+    "paperorigami",
     "Pathing",
     "pointpair",
     "segs",
+    "seps",
     "sevensegment",
     "sevseg",
+    "splt",
     "testinput"
   ]
 }

@@ -10,6 +10,7 @@ mod day_nine;
 mod day_ten;
 mod day_eleven;
 mod day_twelve;
+mod day_thirteen;
 
 mod read_input;
 
@@ -25,5 +26,6 @@ fn main() {
     // day_nine::day_nine_main();
     // day_ten::day_ten_main();
     // day_eleven::day_eleven_main();
-    day_twelve::day_twelve_main();
+    // day_twelve::day_twelve_main();
+    day_thirteen::day_thirteen_main();
 }
