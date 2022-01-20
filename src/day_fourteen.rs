@@ -11,39 +11,25 @@ pub(crate) fn day_fourteen_main() {
     println!("\nDay Fourteen Answers");
 
     let mut input = read_input::read_file("day_fourteen_input.txt");
-    let poly = input.remove(0);
+    let poly_counts = initialize_poly_counts(input.remove(0));
+    let poly_rules: HashMap<String, [String; 2]> = initialize_poly_rules(input);
 
-    let input_tup: Vec<(String, [String; 2])> = input
-        .iter()
-        .skip(1)
-        .map(|line| parse_rule(line).unwrap())
-        .collect();
-    let poly_rules: HashMap<String, [String; 2]> = HashMap::from_iter(input_tup);
+    let part_one_counts = polymerize(10, poly_counts.clone(), poly_rules.clone());
+    let (one_min, one_max) = calc_min_max(part_one_counts).unwrap();
+    println!(
+        "Part One, Max: {one_max}, Min: {one_min}, Diff: {}",
+        one_max - one_min
+    );
 
-    let part_one = polymerize(10, &poly, &poly_rules);
-    let part_two = polymerize(40, &poly, &poly_rules);
-
-    println!("Part One, Diff: {part_one}");
-    println!("Part Two, Diff: {part_two}");
+    let part_two_counts = polymerize(40, poly_counts, poly_rules);
+    let (two_min, two_max) = calc_min_max(part_two_counts).unwrap();
+    println!(
+        "Part Two, Max: {two_max}, Min: {two_min}, Diff: {}",
+        two_max - two_min
+    );
 }
 
-fn polymerize(n: u8, poly: &str, poly_rules: &HashMap<String, [String; 2]>) -> u64 {
-    let mut poly_counts: HashMap<&str, u64> = HashMap::new();
-    for (i, _) in poly.char_indices().skip(1) {
-        *poly_counts.entry(poly.get(i - 1..=i).unwrap()).or_insert(0) += 1;
-    }
-
-    for _ in 1..=n {
-        let mut iter_counts: HashMap<&str, u64> = HashMap::with_capacity(poly_counts.len());
-
-        for (key, val) in poly_counts.iter() {
-            let rules_out = poly_rules.get(&key.to_string()).unwrap();
-            *iter_counts.entry(rules_out[0].as_str()).or_insert(0) += val;
-            *iter_counts.entry(rules_out[1].as_str()).or_insert(0) += val;
-        }
-        poly_counts = iter_counts;
-    }
-
+fn calc_min_max(poly_counts: HashMap<String, u64>) -> Option<(u64, u64)> {
     let mut counts_map: HashMap<char, u64> = HashMap::new();
     for (key, val) in poly_counts.iter() {
         *counts_map.entry(key.chars().next().unwrap()).or_insert(0) += val;
@@ -51,14 +37,34 @@ fn polymerize(n: u8, poly: &str, poly_rules: &HashMap<String, [String; 2]>) -> u
     }
 
     let minmax = counts_map.iter().minmax_by_key(|entry| entry.1);
-
     if let Some((min, max)) = minmax.into_option() {
         let min_count = (*min.1 + 1) / 2;
         let max_count = (*max.1 + 1) / 2;
-        max_count - min_count
+        Some((min_count, max_count))
     } else {
-        unreachable!("error parsing minmax");
+        None
     }
+}
+
+fn initialize_poly_counts(poly_string: String) -> HashMap<String, u64> {
+    poly_string
+        .char_indices()
+        .skip(1)
+        .fold(HashMap::new(), |mut map, (i, _)| {
+            *map.entry(poly_string.get(i - 1..=i).unwrap().to_string())
+                .or_insert(0) += 1;
+            map
+        })
+}
+
+fn initialize_poly_rules(raw_rules: Vec<String>) -> HashMap<String, [String; 2]> {
+    let rules_vec: Vec<(String, [String; 2])> = raw_rules
+        .iter()
+        .skip(1)
+        .map(|line| parse_rule(line).unwrap())
+        .collect();
+    let poly_rules: HashMap<String, [String; 2]> = HashMap::from_iter(rules_vec);
+    poly_rules
 }
 
 fn parse_rule(line_map: &str) -> Option<(String, [String; 2])> {
@@ -77,6 +83,27 @@ fn parse_rule(line_map: &str) -> Option<(String, [String; 2])> {
     } else {
         None
     }
+}
+
+fn polymerize(
+    n: u8,
+    poly_counts: HashMap<String, u64>,
+    poly_rules: HashMap<String, [String; 2]>,
+) -> HashMap<String, u64> {
+    if n == 0 {
+        return poly_counts;
+    }
+
+    let iter_counts: HashMap<String, u64> =
+        poly_counts.iter().fold(HashMap::new(), |mut map, (k, v)| {
+            *map.entry(poly_rules.get(k).unwrap()[0].clone())
+                .or_insert(0) += v;
+            *map.entry(poly_rules.get(k).unwrap()[1].clone())
+                .or_insert(0) += v;
+            map
+        });
+
+    polymerize(n - 1, iter_counts, poly_rules)
 }
 
 #[test]
@@ -184,31 +211,39 @@ fn test_dayfourteen_parserule_some() {
 #[test]
 fn test_dayfourteen_polymerize_example() {
     let mut input = read_input::read_file("day_fourteen_test_input.txt");
-    let poly = input.remove(0);
+    let poly_counts = initialize_poly_counts(input.remove(0));
+    let poly_rules: HashMap<String, [String; 2]> = initialize_poly_rules(input);
 
-    let input_tup: Vec<(String, [String; 2])> = input
-        .iter()
-        .skip(1)
-        .map(|line| parse_rule(line).unwrap())
-        .collect();
-    let poly_rules: HashMap<String, [String; 2]> = HashMap::from_iter(input_tup);
+    let part_one_counts = polymerize(10, poly_counts.clone(), poly_rules.clone());
+    let (one_min, one_max) = calc_min_max(part_one_counts).unwrap();
+    let part_one_diff = one_max - one_min;
+    assert_eq!(part_one_diff, 1588, "testing example, part one difference");
 
-    assert_eq!(polymerize(10, &poly, &poly_rules), 1588);
-    assert_eq!(polymerize(40, &poly, &poly_rules), 2188189693529);
+    let part_two_counts = polymerize(40, poly_counts, poly_rules);
+    let (two_min, two_max) = calc_min_max(part_two_counts).unwrap();
+    let part_two_diff = two_max - two_min;
+    assert_eq!(
+        part_two_diff, 2188189693529,
+        "testing example, part two difference"
+    );
 }
 
 #[test]
 fn test_dayfourteen_polymerize_actual() {
     let mut input = read_input::read_file("day_fourteen_input.txt");
-    let poly = input.remove(0);
+    let poly_counts = initialize_poly_counts(input.remove(0));
+    let poly_rules: HashMap<String, [String; 2]> = initialize_poly_rules(input);
 
-    let input_tup: Vec<(String, [String; 2])> = input
-        .iter()
-        .skip(1)
-        .map(|line| parse_rule(line).unwrap())
-        .collect();
-    let poly_rules: HashMap<String, [String; 2]> = HashMap::from_iter(input_tup);
+    let part_one_counts = polymerize(10, poly_counts.clone(), poly_rules.clone());
+    let (one_min, one_max) = calc_min_max(part_one_counts).unwrap();
+    let part_one_diff = one_max - one_min;
+    assert_eq!(part_one_diff, 2375, "testing actual, part one difference");
 
-    assert_eq!(polymerize(10, &poly, &poly_rules), 2375);
-    assert_eq!(polymerize(40, &poly, &poly_rules), 1976896901756);
+    let part_two_counts = polymerize(40, poly_counts, poly_rules);
+    let (two_min, two_max) = calc_min_max(part_two_counts).unwrap();
+    let part_two_diff = two_max - two_min;
+    assert_eq!(
+        part_two_diff, 1976896901756,
+        "testing actual, part two difference"
+    );
 }
