@@ -2,13 +2,14 @@
 //! Day Fourteen - Extended Polymerization
 #![allow(dead_code)]
 
-use itertools::Itertools;
-
 use crate::read_input;
+use itertools::Itertools;
 use std::collections::HashMap;
+use std::time::Instant;
 
 pub(crate) fn day_fourteen_main() {
     println!("\nDay Fourteen Answers");
+    let now = Instant::now();
 
     let mut input = read_input::read_file("day_fourteen_input.txt");
     let poly_counts = initialize_poly_counts(input.remove(0));
@@ -27,6 +28,8 @@ pub(crate) fn day_fourteen_main() {
         "Part Two, Max: {two_max}, Min: {two_min}, Diff: {}",
         two_max - two_min
     );
+
+    println!("Execution time: {}ms", now.elapsed().as_millis());
 }
 
 fn calc_min_max(poly_counts: HashMap<String, u64>) -> Option<(u64, u64)> {
