@@ -2,8 +2,8 @@
 //! Day Ten - Syntax Scoring
 #![allow(dead_code)]
 
-use std::collections::HashMap;
 use crate::read_input;
+use std::collections::HashMap;
 
 pub(crate) fn day_ten_main() {
     println!("\nDay Ten Answers");

@@ -38,20 +38,22 @@ fn print_sliding_count(values: &[i32]) {
     let mut inc_counter = 0;
 
     let n = values.len();
-    for i in 1..n-2 {
-        let prev_val = values[i-1] + values[i] + values[i+1];
-        let cur_val = values[i] + values[i+1] + values[i+2];
+    for i in 1..n - 2 {
+        let prev_val = values[i - 1] + values[i] + values[i + 1];
+        let cur_val = values[i] + values[i + 1] + values[i + 2];
 
         if prev_val < cur_val {
             inc_counter += 1;
         }
-    };
+    }
 
     println!("Sliding Depth Increase Count: {}", inc_counter);
 }
 
 fn read_lines<P>(filename: P) -> io::Result<io::Lines<io::BufReader<File>>>
-where P: AsRef<Path>, {
+where
+    P: AsRef<Path>,
+{
     let file = File::open(filename)?;
     Ok(io::BufReader::new(file).lines())
 }

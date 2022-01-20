@@ -151,7 +151,9 @@ impl Basin {
     }
 
     fn get_total_risk_level(&self) -> u32 {
-        self.low_points.iter().fold(0, |acc, &x| acc + x.v as u32 + 1)
+        self.low_points
+            .iter()
+            .fold(0, |acc, &x| acc + x.v as u32 + 1)
     }
 
     fn get_step(&self, lp: &MapLocation, search_dir: &SearchDir) -> Option<MapLocation> {

@@ -134,7 +134,7 @@ impl BingoBoard {
             values,
         }
     }
-    
+
     fn check_board(&self) -> bool {
         let col_bingo = self.check_cols();
         let row_bingo = self.check_rows();

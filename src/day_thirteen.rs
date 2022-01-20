@@ -359,7 +359,10 @@ fn test_daythirteen_paperorigami_actual() {
     assert_eq!(origami.size_m, 894);
     assert_eq!(origami.size_n, 1311);
 
-    let instrs: Vec<_> = seps[1].iter().map(|x| FoldDirection::new(x).unwrap()).collect();
+    let instrs: Vec<_> = seps[1]
+        .iter()
+        .map(|x| FoldDirection::new(x).unwrap())
+        .collect();
     for instr in instrs {
         origami = origami.fold(instr).unwrap();
     }

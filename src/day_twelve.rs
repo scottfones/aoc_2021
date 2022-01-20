@@ -22,7 +22,7 @@ fn part_one(path_dict: &HashMap<&str, Vec<&str>>) {
     }
 
     let path_count = count_paths(&path_tree);
-    println!("Part One, Path Count: {}",path_count);
+    println!("Part One, Path Count: {}", path_count);
 }
 
 fn part_two(path_dict: &HashMap<&str, Vec<&str>>) {
@@ -31,8 +31,8 @@ fn part_two(path_dict: &HashMap<&str, Vec<&str>>) {
         path_tree.add2(vec!["start".to_string()], val.to_string(), path_dict);
     }
 
-   let path_count = count_paths(&path_tree);
-   println!("Part Two, Path Count: {}", path_count);
+    let path_count = count_paths(&path_tree);
+    println!("Part Two, Path Count: {}", path_count);
 }
 
 #[derive(Debug)]
@@ -88,9 +88,7 @@ impl CaveNode {
         let mut new_node = CaveNode::new(new_id.clone());
 
         match (&self.cave_type, &new_node.cave_type) {
-            (_, &CaveType::Small) if chain.contains(&new_id) => {
-                false
-            }
+            (_, &CaveType::Small) if chain.contains(&new_id) => false,
             (_, &CaveType::End) => {
                 self.paths.push(new_node);
                 true
@@ -99,7 +97,7 @@ impl CaveNode {
                 chain.push(new_id.clone());
                 if let Some(values) = path_dict.get(&new_id.as_str()) {
                     for val in values {
-                        is_term_path |=  new_node.add(chain.clone(), val.to_string(), path_dict);
+                        is_term_path |= new_node.add(chain.clone(), val.to_string(), path_dict);
                     }
                 }
 
@@ -138,7 +136,8 @@ impl CaveNode {
                     chain.push(new_id.clone());
                     if let Some(values) = path_dict.get(&new_id.as_str()) {
                         for val in values {
-                            is_term_path |= new_node.add2(chain.clone(), val.to_string(), path_dict);
+                            is_term_path |=
+                                new_node.add2(chain.clone(), val.to_string(), path_dict);
                         }
                     }
 
@@ -157,7 +156,7 @@ impl CaveNode {
                 chain.push(new_id.clone());
                 if let Some(values) = path_dict.get(&new_id.as_str()) {
                     for val in values {
-                        is_term_path |=  new_node.add2(chain.clone(), val.to_string(), path_dict);
+                        is_term_path |= new_node.add2(chain.clone(), val.to_string(), path_dict);
                     }
                 }
 
@@ -208,9 +207,7 @@ fn count_paths(cave_node: &CaveNode) -> u32 {
     let mut path_count = 0_u32;
 
     match cave_node.cave_type {
-        CaveType::End => {
-            1
-        }
+        CaveType::End => 1,
         _ => {
             for node in &cave_node.paths {
                 path_count += count_paths(node)
@@ -257,7 +254,7 @@ fn test_daytwelve_part_one_sample_medium() {
         path_tree.add(vec!["start".to_string()], val.to_string(), &path_dict);
     }
 
-    let paths = count_paths(&path_tree,);
+    let paths = count_paths(&path_tree);
     assert_eq!(paths, 19)
 }
 
