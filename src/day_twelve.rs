@@ -4,15 +4,19 @@
 
 use crate::read_input;
 use std::collections::HashMap;
+use std::time::Instant;
 
 pub(crate) fn day_twelve_main() {
     println!("\nDay Twelve Answers");
+    let now = Instant::now();
 
     let input = read_input::read_file("day_twelve_input.txt");
     let path_dict = build_path_dict(&input);
 
     part_one(&path_dict);
     part_two(&path_dict);
+
+    println!("Execution time: {}ms", now.elapsed().as_millis());
 }
 
 fn part_one(path_dict: &HashMap<&str, Vec<&str>>) {

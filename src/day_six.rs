@@ -3,14 +3,19 @@
 #![allow(dead_code)]
 
 use std::{collections::HashMap, fs};
+use std::time::Instant;
 
 pub(crate) fn day_six_main() {
     println!("\nDay Six Answers");
+    let now = Instant::now();
+
     let input = fs::read_to_string("input/day_six_input.txt").expect("Error reading file");
     let values: Vec<u8> = input.split(',').map(|x| x.parse::<u8>().unwrap()).collect();
 
     pop_est(&values, 80);
     pop_est(&values, 256);
+
+    println!("Execution time: {}ms", now.elapsed().as_millis());
 }
 
 fn pop_est(values: &[u8], days: u16) -> u64 {

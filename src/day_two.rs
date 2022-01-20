@@ -3,13 +3,18 @@
 #![allow(dead_code)]
 
 use crate::read_input;
+use std::time::Instant;
 
 pub(crate) fn day_two_main() {
     println!("\nDay Two Answers");
+    let now = Instant::now();
+
     let input = read_input::read_file("day_two_input.txt");
 
     calc_dist_depth(&input);
     calc_aim(&input);
+
+    println!("Execution time: {}ms", now.elapsed().as_millis());
 }
 
 fn calc_dist_depth(values: &[String]) {

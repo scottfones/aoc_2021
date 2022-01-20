@@ -4,13 +4,18 @@
 
 use crate::read_input;
 use std::{collections::HashMap, str::FromStr};
+use std::time::Instant;
 
 pub(crate) fn day_five_main() {
     println!("\nDay Five Answers");
+    let now = Instant::now();
+
     let input = read_input::read_file("day_five_input.txt");
 
     part_one(&input);
     part_two(&input);
+
+    println!("Execution time: {}ms", now.elapsed().as_millis());
 }
 
 #[derive(Debug, PartialEq)]

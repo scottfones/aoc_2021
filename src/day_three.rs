@@ -2,16 +2,20 @@
 //! Day Three - Binary Diagnostic
 #![allow(dead_code)]
 
-use std::fmt::Debug;
 
 use crate::read_input;
+use std::fmt::Debug;
+use std::time::Instant;
 
 pub(crate) fn day_three_main() {
     println!("\nDay Three Answers");
-    let input = read_input::read_file("day_three_input.txt");
+    let now = Instant::now();
 
+    let input = read_input::read_file("day_three_input.txt");
     let _ = calc_gamma_eps(&input);
     let _ = calc_oxy_co2(&input);
+
+    println!("Execution time: {}ms", now.elapsed().as_millis());
 }
 
 fn calc_gamma_eps(values: &[String]) -> u32 {

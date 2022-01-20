@@ -4,9 +4,11 @@
 
 use crate::read_input;
 use std::{collections::HashSet, fmt};
+use std::time::Instant;
 
 pub(crate) fn day_thirteen_main() {
     println!("\nDay Thirteen Answers");
+    let now = Instant::now();
 
     let input = read_input::read_file("day_thirteen_input.txt");
 
@@ -28,8 +30,9 @@ pub(crate) fn day_thirteen_main() {
     for inst in instrs {
         origami = origami.fold(inst).unwrap();
     }
-
     println!("Part Two, {}", origami);
+
+    println!("Execution time: {}ms", now.elapsed().as_millis());
 }
 
 #[derive(Debug, PartialEq)]

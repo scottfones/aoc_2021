@@ -4,15 +4,19 @@
 
 use crate::read_input;
 use ndarray::prelude::*;
+use std::time::Instant;
 
 pub(crate) fn day_eleven_main() {
     println!("\nDay Eleven Answers");
+    let now = Instant::now();
 
     let input = read_input::read_file("day_eleven_input.txt");
     let octomap = OctoMap::new(input);
 
     part_one(octomap.clone());
     part_two(octomap);
+
+    println!("Execution time: {}ms", now.elapsed().as_millis());
 }
 
 fn part_one(mut om: OctoMap) {

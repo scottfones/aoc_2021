@@ -3,9 +3,12 @@
 #![allow(dead_code)]
 
 use std::fs;
+use std::time::Instant;
 
 pub(crate) fn day_six_main() {
     println!("\nDay Seven Answers");
+    let now = Instant::now();
+
     let input = fs::read_to_string("input/day_seven_input.txt").expect("Error reading file");
     let mut values: Vec<u32> = input
         .split(',')
@@ -15,6 +18,8 @@ pub(crate) fn day_six_main() {
 
     part_one(&values);
     part_two(&values);
+
+    println!("Execution time: {}ms", now.elapsed().as_millis());
 }
 
 fn part_one(values: &[u32]) -> u32 {

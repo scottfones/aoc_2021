@@ -4,16 +4,20 @@
 
 use crate::read_input;
 use std::fmt::Debug;
+use std::time::Instant;
 
 pub(crate) fn day_four_main() {
     println!("\nDay Four Answers");
-    let mut input = read_input::read_file("day_four_input.txt");
+    let now = Instant::now();
 
+    let mut input = read_input::read_file("day_four_input.txt");
     let boards = get_boards(&mut input);
     let rand_vals = get_randoms(&input);
 
     play_to_win(boards.clone(), &rand_vals);
     play_to_lose(boards, &rand_vals);
+
+    println!("Execution time: {}ms", now.elapsed().as_millis());
 }
 
 /// Parse and return the bingo boards associated with the dataset.

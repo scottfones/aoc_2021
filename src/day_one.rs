@@ -5,9 +5,12 @@
 use std::fs::File;
 use std::io::{self, BufRead};
 use std::path::Path;
+use std::time::Instant;
 
 pub(crate) fn day_one_main() {
     println!("\nDay One Answers");
+    let now = Instant::now();
+
     let mut input = Vec::new();
     if let Ok(lines) = read_lines("./input/day_one_input.txt") {
         for line in lines {
@@ -17,6 +20,8 @@ pub(crate) fn day_one_main() {
 
     print_raw_count(&input);
     print_sliding_count(&input);
+
+    println!("Execution time: {}ms", now.elapsed().as_millis());
 }
 
 fn print_raw_count(values: &[i32]) {

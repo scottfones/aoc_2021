@@ -6,15 +6,19 @@ use std::collections::HashSet;
 
 use crate::read_input;
 use ndarray::{s, Array, Array2};
+use std::time::Instant;
 
 pub(crate) fn day_nine_main() {
     println!("\nDay Nine Answers");
+    let now = Instant::now();
 
     let input = read_input::read_file("day_nine_input.txt");
     let basin = Basin::new(input);
 
     part_one(&basin);
     part_two(basin);
+
+    println!("Execution time: {}ms", now.elapsed().as_millis());
 }
 
 fn part_one(b: &Basin) {
