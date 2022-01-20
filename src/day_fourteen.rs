@@ -14,14 +14,14 @@ pub(crate) fn day_fourteen_main() {
     let poly_counts = initialize_poly_counts(input.remove(0));
     let poly_rules: HashMap<String, [String; 2]> = initialize_poly_rules(input);
 
-    let part_one_counts = polymerize(10, poly_counts.clone(), poly_rules.clone());
+    let part_one_counts = polymerize(10, &poly_counts, &poly_rules);
     let (one_min, one_max) = calc_min_max(part_one_counts).unwrap();
     println!(
         "Part One, Max: {one_max}, Min: {one_min}, Diff: {}",
         one_max - one_min
     );
 
-    let part_two_counts = polymerize(40, poly_counts, poly_rules);
+    let part_two_counts = polymerize(40, &poly_counts, &poly_rules);
     let (two_min, two_max) = calc_min_max(part_two_counts).unwrap();
     println!(
         "Part Two, Max: {two_max}, Min: {two_min}, Diff: {}",
@@ -87,11 +87,11 @@ fn parse_rule(line_map: &str) -> Option<(String, [String; 2])> {
 
 fn polymerize(
     n: u8,
-    poly_counts: HashMap<String, u64>,
-    poly_rules: HashMap<String, [String; 2]>,
+    poly_counts: &HashMap<String, u64>,
+    poly_rules: &HashMap<String, [String; 2]>,
 ) -> HashMap<String, u64> {
     if n == 0 {
-        return poly_counts;
+        return poly_counts.clone();
     }
 
     let iter_counts: HashMap<String, u64> =
@@ -103,7 +103,7 @@ fn polymerize(
             map
         });
 
-    polymerize(n - 1, iter_counts, poly_rules)
+    polymerize(n - 1, &iter_counts, poly_rules)
 }
 
 #[test]
@@ -214,12 +214,12 @@ fn test_dayfourteen_polymerize_example() {
     let poly_counts = initialize_poly_counts(input.remove(0));
     let poly_rules: HashMap<String, [String; 2]> = initialize_poly_rules(input);
 
-    let part_one_counts = polymerize(10, poly_counts.clone(), poly_rules.clone());
+    let part_one_counts = polymerize(10, &poly_counts, &poly_rules);
     let (one_min, one_max) = calc_min_max(part_one_counts).unwrap();
     let part_one_diff = one_max - one_min;
     assert_eq!(part_one_diff, 1588, "testing example, part one difference");
 
-    let part_two_counts = polymerize(40, poly_counts, poly_rules);
+    let part_two_counts = polymerize(40, &poly_counts, &poly_rules);
     let (two_min, two_max) = calc_min_max(part_two_counts).unwrap();
     let part_two_diff = two_max - two_min;
     assert_eq!(
@@ -234,12 +234,12 @@ fn test_dayfourteen_polymerize_actual() {
     let poly_counts = initialize_poly_counts(input.remove(0));
     let poly_rules: HashMap<String, [String; 2]> = initialize_poly_rules(input);
 
-    let part_one_counts = polymerize(10, poly_counts.clone(), poly_rules.clone());
+    let part_one_counts = polymerize(10, &poly_counts, &poly_rules);
     let (one_min, one_max) = calc_min_max(part_one_counts).unwrap();
     let part_one_diff = one_max - one_min;
     assert_eq!(part_one_diff, 2375, "testing actual, part one difference");
 
-    let part_two_counts = polymerize(40, poly_counts, poly_rules);
+    let part_two_counts = polymerize(40, &poly_counts, &poly_rules);
     let (two_min, two_max) = calc_min_max(part_two_counts).unwrap();
     let part_two_diff = two_max - two_min;
     assert_eq!(
