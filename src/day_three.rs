@@ -2,7 +2,6 @@
 //! Day Three - Binary Diagnostic
 #![allow(dead_code)]
 
-
 use crate::read_input;
 use std::fmt::Debug;
 use std::time::Instant;

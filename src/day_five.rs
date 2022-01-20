@@ -3,8 +3,8 @@
 #![allow(dead_code)]
 
 use crate::read_input;
-use std::{collections::HashMap, str::FromStr};
 use std::time::Instant;
+use std::{collections::HashMap, str::FromStr};
 
 pub(crate) fn day_five_main() {
     println!("\nDay Five Answers");

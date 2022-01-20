@@ -2,8 +2,8 @@
 //! Day Six - Lanternfish
 #![allow(dead_code)]
 
-use std::{collections::HashMap, fs};
 use std::time::Instant;
+use std::{collections::HashMap, fs};
 
 pub(crate) fn day_six_main() {
     println!("\nDay Six Answers");
