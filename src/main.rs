@@ -1,5 +1,8 @@
+use std::time::Instant;
+
 mod day_eight;
 mod day_eleven;
+mod day_fifteen;
 mod day_five;
 mod day_four;
 mod day_fourteen;
@@ -16,6 +19,9 @@ mod day_two;
 mod read_input;
 
 fn main() {
+    println!("Advent of Code - 2021");
+    let now = Instant::now();
+
     // day_one::day_one_main();
     // day_two::day_two_main();
     // day_three::day_three_main();
@@ -29,5 +35,8 @@ fn main() {
     // day_eleven::day_eleven_main();
     // day_twelve::day_twelve_main();
     // day_thirteen::day_thirteen_main();
-    day_fourteen::day_fourteen_main();
+    // day_fourteen::day_fourteen_main();
+    day_fifteen::day_fifteen_main();
+
+    println!("\nTotal Execution time: {}ms", now.elapsed().as_millis());
 }
