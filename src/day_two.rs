@@ -6,7 +6,7 @@ use crate::read_input;
 use std::time::Instant;
 
 pub(crate) fn day_two_main() {
-    println!("\nDay Two Answers");
+    println!("\nDay Two - Dive! - Answers");
     let now = Instant::now();
 
     let input = read_input::read_file("day_two_input.txt");
@@ -36,9 +36,7 @@ fn calc_dist_depth(values: &[String]) {
         }
     }
 
-    println!("Depth: {}", depth);
-    println!("Distance: {}", dist);
-    println!("Depth x Distance: {}", depth * dist);
+    println!("Part One, Depth x Distance: {}", depth * dist);
 }
 
 fn calc_aim(values: &[String]) {
@@ -62,7 +60,5 @@ fn calc_aim(values: &[String]) {
         }
     }
 
-    println!("Aim: Depth: {}", depth);
-    println!("Aim: Distance: {}", dist);
     println!("Aim: Depth x Distance: {}", depth * dist);
 }

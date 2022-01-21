@@ -7,7 +7,7 @@ use std::fmt::Debug;
 use std::time::Instant;
 
 pub(crate) fn day_four_main() {
-    println!("\nDay Four Answers");
+    println!("\nDay Four - Giant Squid - Answers");
     let now = Instant::now();
 
     let mut input = read_input::read_file("day_four_input.txt");
@@ -60,7 +60,7 @@ fn play_to_win(mut boards: Vec<BingoBoard>, nums: &[u8]) -> Option<u32> {
     for num in nums.iter() {
         for board in boards.iter_mut() {
             if board.mark_board(*num) && board.check_board() {
-                println!("!!!BINGO!!!");
+                println!("Part One, Winner:");
                 println!("Last drawn: {}", num);
                 return Some(board.score_board(*num));
             }
@@ -89,7 +89,7 @@ fn play_to_lose(mut boards: Vec<BingoBoard>, nums: &[u8]) -> Option<u32> {
             }
 
             if win_count == board_count {
-                println!("!!!LOSER!!!");
+                println!("Part Two, Loser:");
                 println!("Last drawn: {}", num);
                 return Some(board.score_board(*num));
             }

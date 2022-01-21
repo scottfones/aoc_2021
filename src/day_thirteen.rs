@@ -7,7 +7,7 @@ use std::time::Instant;
 use std::{collections::HashSet, fmt};
 
 pub(crate) fn day_thirteen_main() {
-    println!("\nDay Thirteen Answers");
+    println!("\nDay Thirteen - Transparent Origami - Answers");
     let now = Instant::now();
 
     let input = read_input::read_file("day_thirteen_input.txt");

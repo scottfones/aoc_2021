@@ -7,7 +7,7 @@ use std::collections::{HashMap, HashSet};
 use std::time::Instant;
 
 pub(crate) fn day_eight_main() {
-    println!("\nDay Eight Answers");
+    println!("\nDay Eight - Seven Segment Search - Answers");
     let now = Instant::now();
 
     let input = read_input::read_file("day_eight_input.txt");

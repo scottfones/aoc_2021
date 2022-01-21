@@ -8,7 +8,7 @@ use std::path::Path;
 use std::time::Instant;
 
 pub(crate) fn day_one_main() {
-    println!("\nDay One Answers");
+    println!("\nDay One - Sonar Sweep - Answers");
     let now = Instant::now();
 
     let mut input = Vec::new();

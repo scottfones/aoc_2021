@@ -7,7 +7,7 @@ use std::collections::HashMap;
 use std::time::Instant;
 
 pub(crate) fn day_ten_main() {
-    println!("\nDay Ten Answers");
+    println!("\nDay Ten - Syntax Scoring - Answers");
     let now = Instant::now();
 
     let input = read_input::read_file("day_ten_input.txt");

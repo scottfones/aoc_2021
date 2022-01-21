@@ -7,7 +7,7 @@ use std::fmt::Debug;
 use std::time::Instant;
 
 pub(crate) fn day_three_main() {
-    println!("\nDay Three Answers");
+    println!("\nDay Three - Binary Diagnostic - Answers");
     let now = Instant::now();
 
     let input = read_input::read_file("day_three_input.txt");
@@ -43,9 +43,7 @@ fn calc_gamma_eps(values: &[String]) -> u32 {
     let gamma = bin_vec_to_dec(&gamma_arr);
     let epsilon = bin_vec_to_dec(&epsilon_arr);
 
-    println!("Gamma: {}", gamma);
-    println!("Epsilon: {}", epsilon);
-    println!("Gamma x Epsilon: {}", gamma * epsilon);
+    println!("Part One, Gamma x Epsilon: {}", gamma * epsilon);
     gamma * epsilon
 }
 
@@ -173,14 +171,11 @@ fn calc_oxy_co2(values: &[String]) -> u32 {
     let max_seq = find_max(&life_tree);
     let min_seq = find_min(&life_tree);
 
-    println!("Oxy Max: {}", max_seq);
-    println!("CO2 Min: {}", min_seq);
-
     let max_dec = bin_string_to_dec(max_seq);
     let min_dec = bin_string_to_dec(min_seq);
 
     let life_product = max_dec * min_dec;
-    println!("Oxy CO2 Product: {}", life_product);
+    println!("Part Two, Oxy x CO2: {}", life_product);
     life_product
 }
 

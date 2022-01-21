@@ -6,7 +6,7 @@ use std::fs;
 use std::time::Instant;
 
 pub(crate) fn day_six_main() {
-    println!("\nDay Seven Answers");
+    println!("\nDay Seven - The Treachery of Whales - Answers");
     let now = Instant::now();
 
     let input = fs::read_to_string("input/day_seven_input.txt").expect("Error reading file");

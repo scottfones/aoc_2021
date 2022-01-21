@@ -8,7 +8,7 @@ use std::collections::HashMap;
 use std::time::Instant;
 
 pub(crate) fn day_fourteen_main() {
-    println!("\nDay Fourteen Answers");
+    println!("\nDay Fourteen - Extended Polymerization - Answers");
     let now = Instant::now();
 
     let mut input = read_input::read_file("day_fourteen_input.txt");

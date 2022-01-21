@@ -6,14 +6,17 @@ use std::time::Instant;
 use std::{collections::HashMap, fs};
 
 pub(crate) fn day_six_main() {
-    println!("\nDay Six Answers");
+    println!("\nDay Six - Lanternfish - Answers");
     let now = Instant::now();
 
     let input = fs::read_to_string("input/day_six_input.txt").expect("Error reading file");
     let values: Vec<u8> = input.split(',').map(|x| x.parse::<u8>().unwrap()).collect();
 
-    pop_est(&values, 80);
-    pop_est(&values, 256);
+    let part_one_count = pop_est(&values, 80);
+    let part_two_count = pop_est(&values, 256);
+
+    println!("Part One, Fish Count: {part_one_count}");
+    println!("Part Two, Fish Count: {part_two_count}");
 
     println!("Execution time: {}ms", now.elapsed().as_millis());
 }
@@ -51,12 +54,7 @@ fn pop_est(values: &[u8], days: u16) -> u64 {
         fishies = new_fishies;
     }
 
-    let mut fish_count = 0_u64;
-    for val in fishies.values() {
-        fish_count += val;
-    }
-    println!("256 Days, Total Fish: {}", fish_count);
-    fish_count
+    fishies.values().sum()
 }
 
 #[test]

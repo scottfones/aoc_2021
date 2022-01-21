@@ -7,7 +7,7 @@ use std::collections::HashMap;
 use std::time::Instant;
 
 pub(crate) fn day_twelve_main() {
-    println!("\nDay Twelve Answers");
+    println!("\nDay Twelve - Passage Pathing - Answers");
     let now = Instant::now();
 
     let input = read_input::read_file("day_twelve_input.txt");

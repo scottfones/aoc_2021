@@ -9,7 +9,7 @@ use ndarray::{s, Array, Array2};
 use std::time::Instant;
 
 pub(crate) fn day_nine_main() {
-    println!("\nDay Nine Answers");
+    println!("\nDay Nine - Smoke Basin - Answers");
     let now = Instant::now();
 
     let input = read_input::read_file("day_nine_input.txt");
@@ -22,7 +22,6 @@ pub(crate) fn day_nine_main() {
 }
 
 fn part_one(b: &Basin) {
-    println!("Part One, Low Point Count: {}", b.low_points.len());
     println!("Part One, Total Risk Level: {}", b.get_total_risk_level());
 }
 

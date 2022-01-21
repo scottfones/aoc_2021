@@ -7,7 +7,7 @@ use std::time::Instant;
 use std::{collections::HashMap, str::FromStr};
 
 pub(crate) fn day_five_main() {
-    println!("\nDay Five Answers");
+    println!("\nDay Five - Hydrothermal Venture - Answers");
     let now = Instant::now();
 
     let input = read_input::read_file("day_five_input.txt");
@@ -152,7 +152,7 @@ fn part_one(input: &[String]) -> u32 {
         }
     }
 
-    println!("Horizontal and Vertical Count: {}", vent_map.len());
+    println!("Part One, Horiz and Vert Count: {}", vent_map.len());
     cover_count
 }
 
@@ -172,7 +172,7 @@ fn part_two(input: &[String]) -> u32 {
         }
     }
 
-    println!("Diag Count: {}", cover_count);
+    println!("Part Two, Diag Count: {}", cover_count);
     cover_count
 }
 
