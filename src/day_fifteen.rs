@@ -45,7 +45,7 @@ fn path_search(chiton_map: Array2<u32>) -> Option<u32> {
                 for node in next_nodes {
                     frontier.push(node);
                 }
-            },
+            }
         }
     }
 
@@ -87,7 +87,7 @@ fn get_next_acts(chiton_map: &Array2<u32>, node: &SearchNode) -> Option<Vec<Sear
             let p_n = node.state.n;
             let node_down = SearchNode::new(m, n, path_cost, p_m, p_n);
             next_nodes.push(node_down);
-        },
+        }
         (Ordering::Greater, Ordering::Less) => {
             let m = node.state.m - 1;
             let n = node.state.n;
@@ -102,7 +102,7 @@ fn get_next_acts(chiton_map: &Array2<u32>, node: &SearchNode) -> Option<Vec<Sear
             let path_cost = node.path_cost + chiton_map[[m, n]];
             let node_down = SearchNode::new(m, n, path_cost, p_m, p_n);
             next_nodes.push(node_down);
-        },
+        }
         (Ordering::Less, Ordering::Equal) => {
             let m = node.state.m - 1;
             let n = node.state.n;
@@ -111,8 +111,8 @@ fn get_next_acts(chiton_map: &Array2<u32>, node: &SearchNode) -> Option<Vec<Sear
             let p_n = node.state.n;
             let node_up = SearchNode::new(m, n, path_cost, p_m, p_n);
             next_nodes.push(node_up);
-        },
-        _ => {},
+        }
+        _ => {}
     }
 
     // Match Left and Right
@@ -125,7 +125,7 @@ fn get_next_acts(chiton_map: &Array2<u32>, node: &SearchNode) -> Option<Vec<Sear
             let p_n = node.state.n;
             let node_right = SearchNode::new(m, n, path_cost, p_m, p_n);
             next_nodes.push(node_right);
-        },
+        }
         (Ordering::Greater, Ordering::Less) => {
             let m = node.state.m;
             let n = node.state.n - 1;
@@ -140,7 +140,7 @@ fn get_next_acts(chiton_map: &Array2<u32>, node: &SearchNode) -> Option<Vec<Sear
             let path_cost = node.path_cost + chiton_map[[m, n]];
             let node_right = SearchNode::new(m, n, path_cost, p_m, p_n);
             next_nodes.push(node_right);
-        },
+        }
         (Ordering::Less, Ordering::Equal) => {
             let m = node.state.m;
             let n = node.state.n - 1;
@@ -149,13 +149,12 @@ fn get_next_acts(chiton_map: &Array2<u32>, node: &SearchNode) -> Option<Vec<Sear
             let p_n = node.state.n;
             let node_left = SearchNode::new(m, n, path_cost, p_m, p_n);
             next_nodes.push(node_left);
-        },
-        _ => {},
+        }
+        _ => {}
     }
 
     Some(next_nodes)
 }
-
 
 #[derive(Clone, Debug)]
 enum NodeAction {
@@ -220,7 +219,9 @@ impl Ord for SearchNode {
     fn cmp(&self, other: &Self) -> Ordering {
         // Note reverse ordering to force min-heap
         // If path cost is equal, prefer larger distance
-        other.path_cost.cmp(&self.path_cost)
+        other
+            .path_cost
+            .cmp(&self.path_cost)
             .then_with(|| self.state.magnitude().cmp(&other.state.magnitude()))
     }
 }
@@ -246,7 +247,7 @@ fn test_dayfifteen_create_map() {
 
     assert_eq!(test_map.ndim(), 2);
     for ((m, n), &v) in test_map.indexed_iter() {
-        let i = (3*m + n) as u32;
+        let i = (3 * m + n) as u32;
         assert_eq!(v, i, "testing: m:{m}, n:{n} and v{v}");
     }
 }
