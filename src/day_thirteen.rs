@@ -2,9 +2,11 @@
 //! Day Thirteen - Transparent Origami
 #![allow(dead_code)]
 
-use crate::read_input;
+use std::collections::HashSet;
+use std::fmt;
 use std::time::Instant;
-use std::{collections::HashSet, fmt};
+
+use crate::read_input;
 
 pub(crate) fn day_thirteen_main() {
     println!("\nDay Thirteen - Transparent Origami - Answers");

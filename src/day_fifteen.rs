@@ -2,11 +2,13 @@
 //! Day Fifteen - Chiton
 #![allow(dead_code)]
 
-use crate::read_input;
-use ndarray::prelude::*;
 use std::cmp::Ordering;
 use std::collections::{BinaryHeap, HashMap};
 use std::time::Instant;
+
+use ndarray::prelude::*;
+
+use crate::read_input;
 
 pub(crate) fn day_fifteen_main() {
     println!("\nDay Fifteen - Chiton - Answers");

@@ -2,9 +2,10 @@
 //! Day Four - Giant Squid
 #![allow(dead_code)]
 
-use crate::read_input;
 use std::fmt::Debug;
 use std::time::Instant;
+
+use crate::read_input;
 
 pub(crate) fn day_four_main() {
     println!("\nDay Four - Giant Squid - Answers");

@@ -3,10 +3,11 @@
 #![allow(dead_code)]
 
 use std::collections::HashSet;
+use std::time::Instant;
+
+use ndarray::{s, Array, Array2};
 
 use crate::read_input;
-use ndarray::{s, Array, Array2};
-use std::time::Instant;
 
 pub(crate) fn day_nine_main() {
     println!("\nDay Nine - Smoke Basin - Answers");

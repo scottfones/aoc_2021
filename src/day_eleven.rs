@@ -2,9 +2,11 @@
 //! Day Eleven - Dumbo Octopus
 #![allow(dead_code)]
 
-use crate::read_input;
-use ndarray::prelude::*;
 use std::time::Instant;
+
+use ndarray::prelude::*;
+
+use crate::read_input;
 
 pub(crate) fn day_eleven_main() {
     println!("\nDay Eleven - Dumbo Octopus - Answers");

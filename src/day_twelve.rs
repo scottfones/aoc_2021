@@ -2,9 +2,10 @@
 //! Day Twelve - Passage Pathing
 #![allow(dead_code)]
 
-use crate::read_input;
 use std::collections::HashMap;
 use std::time::Instant;
+
+use crate::read_input;
 
 pub(crate) fn day_twelve_main() {
     println!("\nDay Twelve - Passage Pathing - Answers");

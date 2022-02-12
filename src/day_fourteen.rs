@@ -2,10 +2,12 @@
 //! Day Fourteen - Extended Polymerization
 #![allow(dead_code)]
 
-use crate::read_input;
-use itertools::Itertools;
 use std::collections::HashMap;
 use std::time::Instant;
+
+use itertools::Itertools;
+
+use crate::read_input;
 
 pub(crate) fn day_fourteen_main() {
     println!("\nDay Fourteen - Extended Polymerization - Answers");

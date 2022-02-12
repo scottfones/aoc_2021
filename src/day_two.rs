@@ -2,8 +2,9 @@
 //! Day Two - Dive!
 #![allow(dead_code)]
 
-use crate::read_input;
 use std::time::Instant;
+
+use crate::read_input;
 
 pub(crate) fn day_two_main() {
     println!("\nDay Two - Dive! - Answers");

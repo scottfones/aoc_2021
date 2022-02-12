@@ -2,9 +2,10 @@
 //! Day Three - Binary Diagnostic
 #![allow(dead_code)]
 
-use crate::read_input;
 use std::fmt::Debug;
 use std::time::Instant;
+
+use crate::read_input;
 
 pub(crate) fn day_three_main() {
     println!("\nDay Three - Binary Diagnostic - Answers");
@@ -181,11 +182,10 @@ fn calc_oxy_co2(values: &[String]) -> u32 {
 
 /// Used to find the oxygen generator rating according
 /// to the following bit criteria:
-///   - Determine the most common value (0 or 1) in the
-///     current bit position, and keep only numbers with
-///     that bit in that position.
-///   - If 0 and 1 are equally common, keep values with a
-///     1 in the position being considered.
+///   - Determine the most common value (0 or 1) in the current bit position,
+///     and keep only numbers with that bit in that position.
+///   - If 0 and 1 are equally common, keep values with a 1 in the position
+///     being considered.
 fn find_max(tree: &LifeTree) -> String {
     match tree {
         LifeTree::Empty => "".to_string(),
@@ -201,11 +201,10 @@ fn find_max(tree: &LifeTree) -> String {
 
 /// Used to find the CO2 scrubber rating according to the
 /// following bit criteria:
-///   - Determine the least common value (0 or 1) in the
-///     current bit position, and keep only numbers with
-///     that bit in that position.
-///   - If 0 and 1 are equally common, keep values with a
-///     0 in the position being considered.
+///   - Determine the least common value (0 or 1) in the current bit position,
+///     and keep only numbers with that bit in that position.
+///   - If 0 and 1 are equally common, keep values with a 0 in the position
+///     being considered.
 fn find_min(tree: &LifeTree) -> String {
     match tree {
         LifeTree::Empty => "".to_string(),

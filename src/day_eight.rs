@@ -2,9 +2,10 @@
 //! Day Eight - Seven Segment Search
 #![allow(dead_code)]
 
-use crate::read_input;
 use std::collections::{HashMap, HashSet};
 use std::time::Instant;
+
+use crate::read_input;
 
 pub(crate) fn day_eight_main() {
     println!("\nDay Eight - Seven Segment Search - Answers");
