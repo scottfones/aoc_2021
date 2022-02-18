@@ -6,6 +6,7 @@ use std::cmp::Ordering;
 use std::collections::{BinaryHeap, HashMap};
 use std::time::Instant;
 
+use ndarray::concatenate;
 use ndarray::prelude::*;
 
 use crate::read_input;
@@ -17,17 +18,24 @@ pub(crate) fn day_fifteen_main() {
     let input = read_input::read_file("day_fifteen_input.txt");
     let chiton_map = create_map(input);
 
-    match path_search(chiton_map) {
+    match path_search(&chiton_map) {
         Some(cost) => println!("Part One, Cost: {cost}"),
         None => println!("Part One, No Path Found"),
     }
 
     println!("Execution time: {}ms", now.elapsed().as_millis());
+
+    let big_map = bigify_map(&chiton_map);
+    match path_search(&big_map) {
+        Some(cost) => println!("Part Two, Cost: {cost}"),
+        None => println!("Part Two, No Path Found"),
+    }
+    println!("Execution time: {}ms", now.elapsed().as_millis());
 }
 
 /// Dijkstra’s algorithm from
 /// Artificial Intelligence: A Modern Approach Fourth Ed., Russell & Norvig
-fn path_search(chiton_map: Array2<u32>) -> Option<u32> {
+fn path_search(chiton_map: &Array2<u32>) -> Option<u32> {
     let start_node = SearchNode::new(0, 0, 0, 0, 0);
     let mut frontier = BinaryHeap::new();
     frontier.push(start_node);
@@ -41,7 +49,7 @@ fn path_search(chiton_map: Array2<u32>) -> Option<u32> {
             }
         }
 
-        match get_next_acts(&chiton_map, &front_node) {
+        match get_next_acts(chiton_map, &front_node) {
             None => return Some(front_node.path_cost),
             Some(next_nodes) => {
                 for node in next_nodes {
@@ -52,6 +60,42 @@ fn path_search(chiton_map: Array2<u32>) -> Option<u32> {
     }
 
     None
+}
+
+fn bigify_map(orig_map: &Array2<u32>) -> Array2<u32> {
+    let min_col_1 = orig_map.clone();
+    let min_col_2 = orig_map + 1;
+    let min_col_3 = orig_map + 2;
+    let min_col_4 = orig_map + 3;
+    let min_col_5 = orig_map + 4;
+
+    let mut row_1 = concatenate![Axis(1), min_col_1, min_col_2];
+    row_1 = concatenate![Axis(1), row_1, min_col_3];
+    row_1 = concatenate![Axis(1), row_1, min_col_4];
+    row_1 = concatenate![Axis(1), row_1, min_col_5];
+
+    for v in row_1.iter_mut() {
+        if 9 < *v {
+            *v -= 9;
+        }
+    }
+
+    let row_2 = &row_1 + 1;
+    let row_3 = &row_1 + 2;
+    let row_4 = &row_1 + 3;
+    let row_5 = &row_1 + 4;
+
+    let mut mat = concatenate![Axis(0), row_1, row_2];
+    mat = concatenate![Axis(0), mat, row_3];
+    mat = concatenate![Axis(0), mat, row_4];
+    mat = concatenate![Axis(0), mat, row_5];
+
+    for v in mat.iter_mut() {
+        if 9 < *v {
+            *v -= 9;
+        }
+    }
+    mat
 }
 
 fn create_map(input: Vec<String>) -> Array2<u32> {
@@ -280,7 +324,7 @@ fn test_dayfifteen_path_search_part_one_example() {
     let input = read_input::read_file("day_fifteen_test_input.txt");
     let chiton_map = create_map(input);
 
-    assert_eq!(path_search(chiton_map), Some(40));
+    assert_eq!(path_search(&chiton_map), Some(40));
 }
 
 #[test]
@@ -288,5 +332,5 @@ fn test_dayfifteen_path_search_part_one_actual() {
     let input = read_input::read_file("day_fifteen_input.txt");
     let chiton_map = create_map(input);
 
-    assert_eq!(path_search(chiton_map), Some(687));
+    assert_eq!(path_search(&chiton_map), Some(687));
 }
